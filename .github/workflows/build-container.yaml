@@ -12,7 +12,8 @@ env:
   REPO: ${{ github.repository }}
 
 jobs:
-  build-collection:
+  build-container:
+    name: Build Container
     runs-on: ubuntu-latest
 
     permissions:
@@ -51,6 +52,8 @@ jobs:
       - name: Build/push container image
         uses: docker/build-push-action@v5
         with:
+          cache-from: type=gha,scope=container
+          cache-to: type=gha,mode=max,scope=container
           context: .
           push: true
           labels: ${{ steps.metadata.outputs.labels }}
