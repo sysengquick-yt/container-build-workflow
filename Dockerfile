@@ -11,4 +11,6 @@ RUN python3 -m pip install pydantic
 
 RUN python3 -m pip install dnspython
 
+RUN python3 -m pip install fqdn
+
 ENTRYPOINT ["/bin/sh"]
