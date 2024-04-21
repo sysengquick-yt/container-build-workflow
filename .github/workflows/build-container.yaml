@@ -3,8 +3,7 @@ name: Build Container
 
 on:
   push:
-    branches: [main]
-    paths: [Dockerfile]
+    tags: ["*"]
   workflow_dispatch:
 
 env:
@@ -45,13 +44,16 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
+            type=ref,event=tag
+            type=raw,value=latest
+            type=sha
 
-      - name: Build container
+      - name: Build/push container image
         uses: docker/build-push-action@v5
         with:
-          cache-from: type=gha,scope=container
-          cache-to: type=gha,mode=max,scope=container
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
           context: .
-          push: false
+          push: true
           labels: ${{ steps.metadata.outputs.labels }}
           tags: ${{ steps.metadata.outputs.tags }}
