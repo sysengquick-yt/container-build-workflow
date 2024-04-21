@@ -7,4 +7,6 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 RUN python3 -m pip install poetry~=1.8.2
 
+RUN python3 -m pip install pydantic
+
 ENTRYPOINT ["/bin/sh"]
