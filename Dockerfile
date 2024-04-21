@@ -9,4 +9,6 @@ RUN python3 -m pip install poetry~=1.8.2
 
 RUN python3 -m pip install pydantic
 
+RUN python3 -m pip install dnspython
+
 ENTRYPOINT ["/bin/sh"]
